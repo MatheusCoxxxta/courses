@@ -1,15 +1,25 @@
-import User from "./auth/entities/User";
+import SignUpUseCase from "./auth/use-cases/SignUpUseCase";
+import UserRepository from "./infra/Database/repositories/UserRepository";
+import BCryptManager from "./infra/Managers/EncryptManager/implementations/BCryptManager";
+import JwtManager from "./infra/Managers/TokenManager/implementations/JwtManager";
 
-function main() {
-  const userFails = User.create("Matheus", "matheus@dev.com", "senha");
-
-  const userSuccess = User.create(
-    "Matheus Costa",
-    "matheus@dev.edu",
-    "senha@dev"
+async function main() {
+  const userRepository = new UserRepository();
+  const tokenManager = new JwtManager();
+  const encryptManager = new BCryptManager();
+  const signUpUseCase = new SignUpUseCase(
+    userRepository,
+    tokenManager,
+    encryptManager
   );
 
-  console.log(userFails, userSuccess);
+  const jwt = await signUpUseCase.execute({
+    name: "Developer Dev",
+    email: "dev@example.com",
+    password: "developer",
+  });
+
+  console.log(jwt);
 }
 
 main();
