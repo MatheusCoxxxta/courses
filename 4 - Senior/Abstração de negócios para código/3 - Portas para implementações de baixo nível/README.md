@@ -115,7 +115,7 @@ Recapitulando, o desafio é implementar os métodos do UserRepository com a téc
 A base para criação do UserRepository:
 
 infra/Database/repositories/UserRepository.ts
-```typescrpit
+```typescript
 import IUserRepository from "../../../auth/use-cases/ports/IUserRepository";
 import ICreateUserDto from "../../../auth/dtos/ICreateUserDto";
 
